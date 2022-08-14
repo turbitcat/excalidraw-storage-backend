@@ -1,16 +1,19 @@
 FROM node:16-alpine as builder
 
-RUN npm install -g eslint
-RUN npm install -g @nestjs/cli
+RUN npm install -g cnpm --registry=https://registry.npmmirror.com
+
+
+RUN cnpm install -g eslint
+RUN cnpm install -g @nestjs/cli
 
 WORKDIR /app
 
 COPY package.json .
 COPY package-lock.json .
-RUN npm install
+RUN cnpm install
 
 COPY . .
-RUN npm ci --prod
+RUN cnpm ci --prod
 RUN npx nest build
 
 
